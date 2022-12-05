@@ -1,12 +1,12 @@
+from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
-from django.forms.models import ModelForm
-from django import forms
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django.forms import ModelForm
 
-from .models import UserProfile
+from authApp.models import UserProfile
 
 
 class UserLoginForm(AuthenticationForm):
