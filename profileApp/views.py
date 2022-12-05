@@ -14,6 +14,9 @@ class ProfileView(View):
     def get(self, req, *args, **kwargs):
         profile = self.request.user.userprofile
         self.context['profile'] = profile
+
+        watch_list = profile.watch_list.all()
+        self.context['watch_list'] = watch_list
         return render(req, self.template_name, self.context)
 
 

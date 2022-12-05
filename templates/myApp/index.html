@@ -29,7 +29,8 @@
                                        class="card-link btn btn-dark">Delete</a>
                                 {% endif %}
                                 <a href="#" class="card-link btn btn-success">Buy now</a>
-                                <a href="#" class="card-link btn btn-outline-success">Add to watch list</a>
+                                <a href="{% url 'add_to_watch_list' %}?id={{ car.id }}"
+                                   class="card-link btn btn-outline-success">Add to watch list</a>
                             </div>
 
                         </div>

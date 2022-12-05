@@ -6,6 +6,8 @@ from django.http.response import HttpResponse
 from .models import Car
 from .forms import ManipulateProductForm
 
+from authApp.models import UserProfile
+
 
 # Create your views here.
 class IndexView(View):
@@ -84,3 +86,14 @@ class DeleteProductView(View):
         car_id = req.GET.get('id')
         Car.objects.get(id=car_id).delete()
         return redirect('products', permanent=True)
+
+
+class AddProductToWatchList(View):
+    def get(self, req):
+        product_id = req.GET.get('id')
+        product = Car.objects.get(id=product_id)
+
+        user = req.user
+        profile = UserProfile.objects.get(user=user)
+        profile.watch_list.add(product)
+        return redirect('products')

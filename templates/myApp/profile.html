@@ -16,6 +16,11 @@
             </div>
         </div>
         <div class="my-profile-watchlist">
+            {% for product in watch_list %}
+                <div>
+                    {{ product.get_name_display }} {{ product.model }}
+                </div>
+            {% endfor %}
 
         </div>
     </div>
