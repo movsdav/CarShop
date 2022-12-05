@@ -1,0 +1,8 @@
+.my-profile-manipulate {
+    margin: 0.6em 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}

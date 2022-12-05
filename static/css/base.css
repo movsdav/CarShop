@@ -1,0 +1,25 @@
+#container {
+    border-bottom: 1px solid black;
+}
+
+.nav-item {
+    margin: 0.2em;
+    border: 2px solid black;
+    border-radius: 16px;
+    background-color: white;
+
+    transition: background-color .5s;
+}
+
+.nav-item > a {
+    color: black;
+    transition: color .5s;
+}
+
+.nav-item > a:hover {
+    color: white;
+}
+
+.nav-item:hover {
+    background-color: black;
+}

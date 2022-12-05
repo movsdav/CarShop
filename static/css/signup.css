@@ -1,0 +1,12 @@
+.signup-container {
+    width: 50%;
+    margin: auto;
+}
+
+.form-text>ul{
+    text-align: left;
+}
+
+.form-text > ul > li {
+    list-style-type: none;
+}

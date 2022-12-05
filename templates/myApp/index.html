@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="my-main">
+        <div class="my-sidebar">
+            {% if perms.car.can_add_car %}
+                <div class="my-add-product">
+                    <a href="{% url 'add_product' %}" class="btn btn-primary">
+                        Add new car
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="my-content">
+            {% if cars %}
+                {% for car in cars %}
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body bg-white">
+                            <img class="card-img-top" src="{{ car.image.url }}" alt="{{ car.model }}">
+                            <h5 class="card-title">{{ car.get_name_display }} {{ car.model }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ car.price }}$</h6>
+                            <div class="my-buttons">
+                                {% if perms.car.can_edit_car %}
+                                    <a href="{% url 'edit_product' %}?id={{ car.id }}" class="card-link btn btn-info">Change
+                                        info</a>
+                                {% endif %}
+                                {% if perms.car.can_delete_car %}
+                                    <a href="{% url 'delete_product' %}?id={{ car.id }}&delete=True"
+                                       class="card-link btn btn-dark">Delete</a>
+                                {% endif %}
+                                <a href="#" class="card-link btn btn-success">Buy now</a>
+                                <a href="#" class="card-link btn btn-outline-success">Add to watch list</a>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
