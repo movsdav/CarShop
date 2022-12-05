@@ -20,12 +20,6 @@ class Car(models.Model):
     price = models.IntegerField(validators=[
         MinValueValidator(0),
     ])
-    quantity = models.IntegerField(
-        validators=[
-            MinValueValidator(0),
-            MaxValueValidator(10),
-        ], default=0
-    )
     image = models.ImageField(upload_to='images/products', default='static/images/no-image-product.jpg')
 
     def __str__(self):

@@ -70,8 +70,8 @@ class EditProductView(View):
         if car_id is not None:
             car = Car.objects.get(id=car_id)
         else:
-            return HttpResponse("ERROR")  # TODO Error handling
-        form = self.form_class(req.POST or None,files=req.FILES, instance=car, action=self.action)
+            return redirect('products')
+        form = self.form_class(req.POST or None, files=req.FILES, instance=car, action=self.action)
 
         if form.is_valid():
             form.save()

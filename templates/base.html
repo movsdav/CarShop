@@ -26,9 +26,15 @@
                 </ul>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'profile' %}">{{ user.get_username }}</a>
-                        </li>
+                        {% if user.is_superuser %}
+                            <li class="nav-item">
+                                <a style="pointer-events: none" class="nav-link" href="#">{{ user.get_username }}</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'profile' %}">{{ user.get_username }}</a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                         </li>

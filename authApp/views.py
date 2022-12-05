@@ -1,11 +1,12 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User, Group
-from django.shortcuts import redirect
-from django.views.generic.edit import CreateView
+from django.shortcuts import redirect, get_object_or_404
+from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 
 from .forms import UserLoginForm, UserRegistrationForm, ProfileSetUpForm
+from .models import UserProfile
 
 
 class UserSignUpView(CreateView):
@@ -25,12 +26,6 @@ class UserLoginView(LoginView):
     authentication_form = UserLoginForm
     success_url = reverse_lazy('products')
 
-    # def get(self, req, *args, **kwargs):
-    #     if req.user.is_anonymous:
-    #         return super().get(req, *args, **kwargs)
-    #     else:
-    #         return redirect(req.path_info)
-
 
 class ProfileSetUpView(CreateView):
     form_class = ProfileSetUpForm
@@ -42,3 +37,13 @@ class ProfileSetUpView(CreateView):
         user = User.objects.get(id=user_id)
         form.instance.user = user
         return super().form_valid(form)
+
+
+class ProfileUpdateView(UpdateView):
+    model = UserProfile
+    form_class = ProfileSetUpForm
+    success_url = reverse_lazy('profile')
+    template_name = 'registration/profile_set_up.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(UserProfile, pk=self.request.user)

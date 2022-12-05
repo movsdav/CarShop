@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
-        <div class="card p-4">
-            <div class=" image d-flex flex-column justify-content-center align-items-center">
-                <img src="{{ profile.avatar.url }}" height="100" width="100" alt="avatar"/>
-                <span class="card-title mt-3">{{ profile.first_name }} {{ profile.last_name }}</span>
-                <span class="idd">{{ user.username }}</span>
-                <div class="my-profile-manipulate">
-                    <a href="#" class="btn btn-outline-warning">Edit Profile</a>
-                    <a href="{% url 'delete_profile' %}?id={{ user.id }}" class="btn btn-danger">Delete Profile</a>
+    <div class="my-profile-main">
+        <div class="my-profile container mt-4 mb-4 p-3 d-flex justify-content-center">
+            <div class="card p-4">
+                <div class=" image d-flex flex-column justify-content-center align-items-center">
+                    <img src="{{ profile.avatar.url }}" height="100" width="100" alt="avatar"/>
+                    <span class="card-title mt-3">{{ profile.first_name }} {{ profile.last_name }}</span>
+                    <span class="idd">{{ user.username }}</span>
+                    <div class="my-profile-manipulate">
+                        <a href="{% url 'edit_profile' %}" class="btn btn-outline-warning">Edit Profile</a>
+                        <a href="{% url 'delete_profile' %}?id={{ user.id }}" class="btn btn-danger">Delete Profile</a>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="my-profile-watchlist">
+
+        </div>
     </div>
+
 {% endblock %}
