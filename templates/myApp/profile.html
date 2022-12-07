@@ -15,10 +15,22 @@
                 </div>
             </div>
         </div>
+        My Watchlist:
         <div class="my-profile-watchlist">
-            {% for product in watch_list %}
-                <div>
-                    {{ product.get_name_display }} {{ product.model }}
+
+            {% for car in watch_list %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body bg-white">
+                        <img class="card-img-top" src="{{ car.image.url }}" alt="{{ car.model }}">
+                        <h5 class="card-title">{{ car.get_name_display }} {{ car.model }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ car.price }}$</h6>
+                        <div class="my-buttons">
+                            <a href="#" class="card-link btn btn-success">Buy now</a>
+                            <a href="{% url 'delete_from_watch_list' %}?id={{ car.id }}"
+                               class="card-link btn btn-outline-success">Remove from watch list</a>
+                        </div>
+
+                    </div>
                 </div>
             {% endfor %}
 

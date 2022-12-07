@@ -44,4 +44,4 @@ class ProfileSetUpForm(ModelForm):
     class Meta:
         model = UserProfile
         # fields = ['avatar']
-        exclude = ['user']
+        exclude = ['user', 'watch_list']

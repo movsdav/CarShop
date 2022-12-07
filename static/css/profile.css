@@ -7,15 +7,28 @@
     gap: 1em;
 }
 
-.my-profile-watchlist{
-    width: 75%;
+.my-profile-watchlist {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 85%;
 }
 
-.my-profile-container{
-    width: 25%;
+.my-profile-container {
+    width: 15%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 0.5em;
+}
+
+.my-profile-main {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
 }
