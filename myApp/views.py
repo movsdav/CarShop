@@ -100,10 +100,11 @@ class AddProductToWatchList(View):
 
 
 class DeleteProductFromWatchList(View):
-    def get(self,req):
+    def get(self, req):
         product_id = req.GET.get('id')
-        product = Car.objects.get(id = product_id)
+        product = Car.objects.get(id=product_id)
 
-        profile = UserProfile.objects.get(user = req.user)
+        profile = UserProfile.objects.get(user=req.user)
         profile.watch_list.remove(product)
         return redirect('profile')
+
