@@ -1,5 +1,7 @@
 # CarShop
 
+Pure Python/Django without DRF
+
 This is a simple Car Shop project for practice.
 
 Only works on localhost
