@@ -1,0 +1,61 @@
+﻿@using CarShop.Areas.Admin.ViewModel
+@using CarShop.Areas.Admin.Views.Shared
+@using CarShop.Models.Accounts
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<UserRolesViewModel>
+@inject UserManager<AppUser> UserManager
+@{
+    ViewData["ActivePage"] = "Users";
+}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.User.FirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.User.LastName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.User.Email)
+                        </th>
+                        <th>
+                            <p>Roles</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="text-@(item.User.LockoutEnd == null? "succes":"danger")">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.Email)
+                            </td>
+                            <td>
+                                @foreach (var role in item.Roles)
+                                {
+                                    @role
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.User.Id">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+﻿@using CarShop.Models.Accounts
+@model AppUser[]
+@{
+    Layout = "_Layout";
+}
+
+@if(Model.Length > 0)
+{
+    <div class="card-group">
+        @foreach (var dealer in Model)
+        {
+            <div class="card" style="width: 18rem;">
+                @* <img src="~/media/picture.jpg" class="card-img-top" alt="..."> *@
+                <div class="card-body">
+                    <h5 class="card-title">@dealer.FirstName @dealer.LastName</h5>
+                    <p class="card-text">
+                        @if(dealer.CarModels.Count > 0)
+                        {
+                            @foreach(var car in dealer.CarModels)
+                            {
+                                <span>@car.CarBrand.Name @car.Name ,</span>
+                            }
+                        }
+                        else
+                        {
+                            <span>No cars</span>
+                        }
+                    </p>
+                    <a asp-controller="Shopping" asp-action="Dealer" asp-route-id="@dealer.Id" class="btn btn-primary">View profile</a>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No dealers available right now</p>
+}

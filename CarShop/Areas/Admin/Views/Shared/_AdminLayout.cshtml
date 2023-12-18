@@ -1,0 +1,28 @@
+﻿@using CarShop.Areas.Admin.Views.Shared
+@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
+    {
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item"><a asp-controller="Admin" asp-action="Index" class="nav-link @ManageNavPages.UsersNavClass(ViewContext)">Users</a></li>
+                <li class="nav-item"><a asp-controller="CarBrands" asp-action="Index" class="nav-link @ManageNavPages.CarBrandsNavClass(ViewContext)">Car Brands</a></li>
+            </ul>
+        </div>
+        <div class="col-9">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@await RenderSectionAsync("Scripts", required: false)

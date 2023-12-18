@@ -1,0 +1,24 @@
+﻿@page
+@model CarShop.Areas.Identity.Pages.Account.SetUpProfileModel
+@{
+}
+
+
+<form id="registerForm" method="post" enctype="multipart/form-data">
+    <h2>Setting up profile.</h2>
+    <hr />
+    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    <div class="form-floating mb-3">
+        <input asp-for="Input.FirstName" class="form-control" aria-required="true" placeholder="Name" />
+        <label asp-for="Input.FirstName">Name</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Input.LastName" class="form-control" aria-required="true" placeholder="name@example.com" />
+        <label asp-for="Input.LastName">Last Name</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Input.ImgFile" class="form-control"/>
+        <label asp-for="Input.ImgFile">Profile avatar</label>
+    </div>
+    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+</form>

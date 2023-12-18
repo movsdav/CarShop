@@ -1,0 +1,81 @@
+﻿@using CarShop.Areas.Admin.ViewModel
+@model UserRolesViewModel
+@{
+    ViewData["ActivePage"] = "Users";
+}
+
+
+<div class="container">
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.Balance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Balance)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Roles)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Roles)
+        </dd>
+        <dt class="col-sm-2">
+            Image:
+        </dt>
+        <dd class="col-sm-10">
+            <div class="w-25 h-25">
+                <img src="@Model.User.ImgUrl" class="img-thumbnail">
+            </div>
+        </dd>
+        @if (Model.User.LockoutEnd != null)
+        {
+            <dt class="col-sm-2 ">
+                Status:
+            </dt>
+            <dd class="col-sm-10 text-danger">
+                Blocked
+            </dd>
+            <dt class="col-sm-2">
+                Blocked Until:
+            </dt>
+            <dd class="col-sm-10 text-danger">
+                @Html.DisplayFor(model => model.User.LockoutEnd)
+            </dd>
+        }
+    </dl>
+    <div class="row">
+        <div class="col">
+            @if (Model.User.LockoutEnd == null)
+            {
+                <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#blockUser@(Model.User.Id)">Block</button>
+                <partial name="_UserBlockModalPartial" />
+            }
+            else
+            {
+                <form method="post">
+                    <button type="submit" asp-action="UnblockUser" asp-route-id="@Model.User.Id" class="btn btn-outline-warning">Unblock</button>
+                </form>
+            }
+
+            <a class="btn btn-danger" asp-action="RemoveUser" asp-route-id="@Model.User.Id">Delete</a>
+        </div>
+    </div>
+</div>

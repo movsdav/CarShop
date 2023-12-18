@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model CarShop.Models.Product.CarBrand[]
+
+@inject RoleManager<IdentityRole> RoleManager
+@{
+    var isActive = false;
+    string SetClassName()
+    {
+        if (!isActive)
+        {
+            isActive = true;
+            return "active";
+        }
+        return "";
+    }
+}
+
+<div id="carouselExampleSlidesOnly" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner m-auto" style="width:200px;height:200px">
+        @foreach(var car in Model)
+        {
+            <div class="carousel-item @SetClassName()">
+                <img src="@car.ImgUrl" class="d-block img-fluid" alt="...">
+            </div>
+        }
+    </div>
+</div>

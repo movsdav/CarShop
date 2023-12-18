@@ -1,0 +1,50 @@
+﻿@using CarShop.Models.Product
+@model List<WishCart>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Buy cart</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="container-lg m-1">
+            @if (Model.Count > 0)
+            {
+                <div class="row">
+                    <div class="col">
+                        <ul class="list-group shadow">
+                            @foreach (var product in Model)
+                            {
+                                <li class="list-group-item">
+                                    <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                        <div class="media-body order-2 order-lg-1">
+                                            <h5 class="mt-0 font-weight-bold mb-2">@product.CarModel.Name</h5>
+                                            <p class="font-italic text-muted mb-0 small">@product.CarModel.CarBrand.Name</p>
+                                            <div class="d-flex align-items-center justify-content-between mt-1">
+                                                <h6 class="font-weight-bold my-2">@($"{product.CarModel.Price:C2}")</h6>
+                                            </div>
+                                        </div>
+                                        <img src="@product.CarModel.ImgUrl" alt="Product image" width="200" class="ml-lg-5 order-1 order-lg-2">
+                                        <span class="float-end">
+                                            <form method="post" asp-controller="Shopping" asp-action="RemoveFromWishList" asp-route-id="@product.Id">
+                                                <button type="submit" class="btn"><i class="fa-solid fa-xmark fa-xl" style="color:red"></i></button>
+                                            </form>
+                                        </span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p>You don't add any product yet</p>
+            }
+
+        </div>
+    </div>
+    @* <div class="offcanvas-bottom"> *@
+        <a class="btn btn-success" asp-controller="Checkout" asp-action="Index">Go to checkout</a>
+@*     </div> *@
+</div>

@@ -1,0 +1,69 @@
+﻿@using CarShop.Common
+@using CarShop.Models.Accounts
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var userRoles = await UserManager.GetRolesAsync(user);
+        @if (userRoles.Any(r => r == CustomRoles.Dealer))
+        {
+            <li class="nav-item">
+                <a asp-controller="DealerManage" asp-action="Index" class="nav-link"><i class="fa-solid fa-bars"></i></a>
+            </li>
+        }
+
+        @if (userRoles.Any(r => r == CustomRoles.Client))
+        {
+            <li class="nav-item">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-cart-shopping fa-sm"></i></button>
+            </li>
+        }
+
+        @if (userRoles.Any(r => r == CustomRoles.Admin))
+        {
+            <li class="nav-item">
+                <a asp-area="Admin" asp-controller="Admin" asp-action="Index" class="btn nav-link" ><i class="fa-solid fa-hammer fa-lg"></i></a>
+            </li>
+        }
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result.FirstName</a>
+        </li>
+
+        <li class="nav-item">
+            <div class="dropdown">
+                <a class="nav-link text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Balance: @($"{UserManager.GetUserAsync(User).Result.Balance:C2}")
+                </a>
+
+                <ul class="dropdown-menu p-3">
+                    <form asp-controller="Home" asp-action="RefillBalance" method="post">
+                        <label for="amount" class="control-label">Amount: </label>
+                        <input name="amount" for="amount" class="form-control" />
+                    </form>
+                </ul>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    }
+</ul>

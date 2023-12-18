@@ -1,0 +1,22 @@
+﻿@model CarShop.Models.Product.CarModel
+
+@inject IWebHostEnvironment _webHostEnv;
+@{
+    string GetImgUrl()
+    {
+        // Unable load local recources
+        return Model.ImgUrl ?? $@"\media\imgplaceholder.png";
+    }
+}
+
+<div class="card" style="width: 18rem;">
+    <img src="@GetImgUrl()" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">@Model.CarBrand.Name @Model.Name</h5>
+        <p class="card-text">@($"{Model.Price:C2}")</p>
+        <p class="">Dealer <a class="nav-link" asp-action="Dealer" asp-route-id="@Model.AppUserId">@Model.AppUser.FirstName @Model.AppUser.LastName</a></p>
+        <form method="post" asp-controller="Shopping" asp-action="AddToWishList" asp-route-id="@Model.Id">
+            <input type="submit" class="btn btn-primary" value="Add to cart" />
+        </form>
+    </div>
+</div>

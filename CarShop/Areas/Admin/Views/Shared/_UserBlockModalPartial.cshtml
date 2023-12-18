@@ -1,0 +1,26 @@
+﻿
+
+<div class="modal fade" id="blockUser@(Model.User.Id)" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="blockUserForm@(Model.User.Id)" asp-action="BlockUser" asp-route-id="@Model.User.Id">
+                    <div class="form-control">
+                        <label>
+                            Days:
+                            <input name="blockDays" type="number" />
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button form="blockUserForm@(Model.User.Id)" type="submit" class="btn btn-danger">Block</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+﻿@page
+@model ProfileDataModel
+@{
+    ViewData["Title"] = "Profile Data";
+    ViewData["Active-Page"] = ManageNavPages.ProfileData;
+}
+
+<h3>@ViewData["Title"]</h3>
+@* <partial name="_StatusMessage" for="StatusMessage" /> *@
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="FirstName" class="form-control" placeholder="Please choose your First Name." />
+                <label asp-for="FirstName" class="form-label"></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="LastName" class="form-control" placeholder="Please enter your Last Name." />
+                <label asp-for="LastName" class="form-label"></label>
+            </div>
+            <img src="@Model.ImgUrl" alt="avatar"
+                 class="rounded-circle img-fluid" style="width: 150px;">
+            <div class="form-floating mb-3">
+                <input asp-for="ImgFile" class="form-control" type="file"/>
+                <label asp-for="ImgFile" class="form-label"></label>
+            </div>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>
