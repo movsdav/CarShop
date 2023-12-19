@@ -1,5 +1,6 @@
 ﻿using CarShop.Cloud;
 using CarShop.Models.Accounts;
+using CarShop.Models.Chat;
 using CarShop.Models.Product;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,20 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
             .HasIndex(cart => new { cart.AppUserId, cart.CarModelId })
             .IsUnique();
 
+        builder
+            .Entity<Message>()
+            .HasOne(m => m.Sender)
+            .WithMany()
+            .HasForeignKey(m => m.SenderId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .Entity<Message>()
+            .HasOne(m => m.Receiver)
+            .WithMany()
+            .HasForeignKey(m => m.ReceiverId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         base.OnModelCreating(builder);
     }
 
@@ -78,4 +93,5 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
     public DbSet<CarBrand> CarBrands { get; set; } = default!;
     public DbSet<CarModel> CarModels { get; set; } = default!;
     public DbSet<WishCart> WishCarts { get; set; } = default!;
+    public DbSet<Message> Messages { get; set; } = default!;
 }

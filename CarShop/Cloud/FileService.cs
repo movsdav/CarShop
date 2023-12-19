@@ -5,12 +5,14 @@ namespace CarShop.Cloud;
 
 public class FileService
 {
-    private readonly string _storageAccount = "movsdav";
-    private readonly string _key = "a4TK2a23l+tKFpmnS52/Ang+XUwLiAm4Qoehay6Y92FudKicyud6WQdRDvncKXERlNwMWGfhXH0o+AStx1QDyg==";
+    private readonly IConfiguration _config;
     private readonly BlobContainerClient _filesContainer;
 
-    public FileService()
+    public FileService(IConfiguration config)
     {
+        _config = config;
+        var _storageAccount = _config.GetValue<string>("AzureBlob:StorageAccount");
+        var _key = _config.GetValue<string>("AzureBlob:Key");
         var credential = new StorageSharedKeyCredential(_storageAccount, _key);
         var blobUri = $"https://{_storageAccount}.blob.core.windows.net";
         var blobServiceClient = new BlobServiceClient(new Uri(blobUri), credential);
