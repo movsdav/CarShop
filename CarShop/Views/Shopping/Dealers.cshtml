@@ -27,6 +27,7 @@
                         }
                     </p>
                     <a asp-controller="Shopping" asp-action="Dealer" asp-route-id="@dealer.Id" class="btn btn-primary">View profile</a>
+                    <a asp-controller="Chat" asp-action="CheckForConverstaion" asp-route-id="@dealer.Id" class="btn btn-outline-success">Send message</a>
                 </div>
             </div>
         }

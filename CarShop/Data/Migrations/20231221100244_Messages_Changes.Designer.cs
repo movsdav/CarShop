@@ -4,6 +4,7 @@ using CarShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231221100244_Messages_Changes")]
+    partial class Messages_Changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,32 +110,6 @@ namespace CarShop.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("CarShop.Models.Chat.ChatChannel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("User1Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("User2Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("User2Id");
-
-                    b.HasIndex("User1Id", "User2Id")
-                        .IsUnique();
-
-                    b.ToTable("ChatChannels", (string)null);
-                });
-
             modelBuilder.Entity("CarShop.Models.Chat.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -140,9 +117,6 @@ namespace CarShop.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ChatChannelId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -156,13 +130,11 @@ namespace CarShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatChannelId");
-
                     b.HasIndex("ReceiverId");
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("CarShop.Models.Product.CarBrand", b =>
@@ -188,7 +160,7 @@ namespace CarShop.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("CarBrands", (string)null);
+                    b.ToTable("CarBrands");
                 });
 
             modelBuilder.Entity("CarShop.Models.Product.CarModel", b =>
@@ -224,7 +196,7 @@ namespace CarShop.Data.Migrations
 
                     b.HasIndex("CarBrandId");
 
-                    b.ToTable("CarModels", (string)null);
+                    b.ToTable("CarModels");
                 });
 
             modelBuilder.Entity("CarShop.Models.Product.WishCart", b =>
@@ -250,7 +222,7 @@ namespace CarShop.Data.Migrations
                         .IsUnique()
                         .HasFilter("[CarModelId] IS NOT NULL");
 
-                    b.ToTable("WishCarts", (string)null);
+                    b.ToTable("WishCarts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -390,33 +362,8 @@ namespace CarShop.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CarShop.Models.Chat.ChatChannel", b =>
-                {
-                    b.HasOne("CarShop.Models.Accounts.AppUser", "User1")
-                        .WithMany()
-                        .HasForeignKey("User1Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CarShop.Models.Accounts.AppUser", "User2")
-                        .WithMany()
-                        .HasForeignKey("User2Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User1");
-
-                    b.Navigation("User2");
-                });
-
             modelBuilder.Entity("CarShop.Models.Chat.Message", b =>
                 {
-                    b.HasOne("CarShop.Models.Chat.ChatChannel", "ChatChannel")
-                        .WithMany("Messages")
-                        .HasForeignKey("ChatChannelId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("CarShop.Models.Accounts.AppUser", "Receiver")
                         .WithMany()
                         .HasForeignKey("ReceiverId")
@@ -426,8 +373,6 @@ namespace CarShop.Data.Migrations
                         .WithMany()
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("ChatChannel");
 
                     b.Navigation("Receiver");
 
@@ -525,11 +470,6 @@ namespace CarShop.Data.Migrations
                     b.Navigation("CarModels");
 
                     b.Navigation("WishCartItems");
-                });
-
-            modelBuilder.Entity("CarShop.Models.Chat.ChatChannel", b =>
-                {
-                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("CarShop.Models.Product.CarBrand", b =>

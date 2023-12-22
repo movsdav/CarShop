@@ -4,6 +4,7 @@ using CarShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231221113439_Chat_changes")]
+    partial class Chat_changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,7 +133,7 @@ namespace CarShop.Data.Migrations
                     b.HasIndex("User1Id", "User2Id")
                         .IsUnique();
 
-                    b.ToTable("ChatChannels", (string)null);
+                    b.ToTable("ChatChannels");
                 });
 
             modelBuilder.Entity("CarShop.Models.Chat.Message", b =>
@@ -162,7 +165,7 @@ namespace CarShop.Data.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("CarShop.Models.Product.CarBrand", b =>
@@ -188,7 +191,7 @@ namespace CarShop.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("CarBrands", (string)null);
+                    b.ToTable("CarBrands");
                 });
 
             modelBuilder.Entity("CarShop.Models.Product.CarModel", b =>
@@ -224,7 +227,7 @@ namespace CarShop.Data.Migrations
 
                     b.HasIndex("CarBrandId");
 
-                    b.ToTable("CarModels", (string)null);
+                    b.ToTable("CarModels");
                 });
 
             modelBuilder.Entity("CarShop.Models.Product.WishCart", b =>
@@ -250,7 +253,7 @@ namespace CarShop.Data.Migrations
                         .IsUnique()
                         .HasFilter("[CarModelId] IS NOT NULL");
 
-                    b.ToTable("WishCarts", (string)null);
+                    b.ToTable("WishCarts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

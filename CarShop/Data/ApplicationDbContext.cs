@@ -68,6 +68,32 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
             .HasForeignKey(m => m.ReceiverId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder
+            .Entity<ChatChannel>()
+            .HasIndex(channel => new { channel.User1Id, channel.User2Id })
+            .IsUnique();
+
+        builder
+            .Entity<ChatChannel>()
+            .HasOne(channel => channel.User1)
+            .WithMany()
+            .HasForeignKey(c => c.User1Id)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .Entity<ChatChannel>()
+            .HasOne(channel => channel.User2)
+            .WithMany()
+            .HasForeignKey(c => c.User2Id)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .Entity<ChatChannel>()
+            .HasMany(c => c.Messages)
+            .WithOne(m => m.ChatChannel)
+            .HasForeignKey(m => m.ChatChannelId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         base.OnModelCreating(builder);
     }
 
@@ -94,4 +120,5 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
     public DbSet<CarModel> CarModels { get; set; } = default!;
     public DbSet<WishCart> WishCarts { get; set; } = default!;
     public DbSet<Message> Messages { get; set; } = default!;
+    public DbSet<ChatChannel> ChatChannels { get; set; } = default!;
 }

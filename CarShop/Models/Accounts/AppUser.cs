@@ -1,4 +1,5 @@
 ﻿using CarShop.Data;
+using CarShop.Models.Chat;
 using CarShop.Models.Product;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
@@ -28,5 +29,14 @@ public class AppUser : IdentityUser
     public AppUser()
     {
         
+    }
+
+    [NotMapped]
+    public string FullName
+    {
+        get
+        {
+            return $"{FirstName} {LastName}";
+        }
     }
 }
