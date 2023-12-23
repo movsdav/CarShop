@@ -6,18 +6,25 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Channels;
+using Microsoft.AspNetCore.SignalR;
+using CarShop.Hubs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarShop.Controllers;
 
+
+[Authorize]
 public class ChatController : Controller
 {
     private readonly ApplicationDbContext _context;
     private readonly UserManager<AppUser> _userManager;
+    private readonly IHubContext<ChatHub> _chatHub;
 
-    public ChatController(ApplicationDbContext context, UserManager<AppUser> userManager)
+    public ChatController(ApplicationDbContext context, UserManager<AppUser> userManager, IHubContext<ChatHub> chatHub)
     {
         _context = context;
         _userManager = userManager;
+        _chatHub = chatHub;
     }
 
     public async Task<IActionResult> CheckForConverstaion(string? id)
@@ -25,6 +32,11 @@ public class ChatController : Controller
         if (!string.IsNullOrEmpty(id))
         {
             var currentUser = await _userManager.GetUserAsync(User);
+
+            if(currentUser.Id == id)
+            {
+                throw new Exception("You cant chat with yourself!");
+            }
 
             ViewData["CurrentUserId"] = currentUser.Id;
 
@@ -94,24 +106,23 @@ public class ChatController : Controller
         return View(chatViewModel);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> SendMessage([Bind("Content,ReceiverId,SenderId,ChatChannelId")] Message msg)
-    {
-        if (ModelState.IsValid)
-        {
-            await _context.Messages.AddAsync(msg);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-        return RedirectToAction("Index", new
-        {
-            activeChannelId = msg.ChatChannelId
-        });
-    }
+    //public async Task<IActionResult> SendMessage([Bind("Content,ReceiverId,SenderId,ChatChannelId")] Message msg)
+    //{
+    //    if (ModelState.IsValid)
+    //    {
+    //        await _context.Messages.AddAsync(msg);
+    //        try
+    //        {
+    //            await _context.SaveChangesAsync();
+    //        }
+    //        catch (Exception e)
+    //        {
+    //            throw new Exception(e.Message);
+    //        }
+    //    }
+
+    //    await _chatHub.Clients.Group(msg.ChatChannelId.ToString()).SendAsync("ReceiveMessage", msg);
+
+    //    return Ok();
+    //}
 }
