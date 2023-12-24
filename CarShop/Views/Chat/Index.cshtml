@@ -18,7 +18,7 @@
                     {
                         otherUser = channel.User1Id == currentUserId ? channel.User2 : channel.User1;
 
-                        <a asp-action="Index" asp-route-activeChannelId="@channel.Id" class="list-group-item list-group-item-action @ManageActiveChatLink.MakeActive(channel.Id,Model.ActiveChannel?.Id)">
+                        <a asp-action="Index" asp-route-activeChannelId="@channel.Id" class="list-group-item list-group-item-action @ManageActiveChatLink.MakeActive(channel.Id,Model.ActiveChannel?.Id) chat-contact">
                             <div class="d-flex align-items-center">
                                 <img src="@otherUser.ImgUrl" alt="Contact 1" class="rounded-circle mr-3 contact-avatar" style="margin-right: 10px;">
                                 <div>
@@ -50,3 +50,9 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    
+}
+
+
