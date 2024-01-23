@@ -10,3 +10,4 @@ Technologies used for building:
   - Azure Blob Storage (For user and product media files)
 
 This project hosted on Azure Service and available on : dmsoft.am (May be turned off).
+(Cloud storage and Azure hosting don't working because of problem with subscription)
